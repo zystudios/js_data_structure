@@ -127,4 +127,22 @@ testLink.insert(3, 'n6');
 testLink.insert(1, 'n7');
 
 testLink.delete(1);
-console.dir(testLink, { depth: 100 });
+// console.dir(testLink, { depth: 100 });
+
+
+// 单链表反转，最简单的思路就是，单独创建一个新链表，然后遍历另一个链表，每次取node，头部插入到新链表里去
+
+let oldLink = new LinkedList();
+oldLink.append('1');
+oldLink.append('2');
+oldLink.append('3');
+oldLink.append('4');
+
+let newLink = new LinkedList();
+
+for(var i = 0; i < oldLink.length; i++){
+    newLink.insert(0,oldLink.findNode(i).data);
+
+}
+
+console.dir(newLink, { depth: 100 });
