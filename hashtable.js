@@ -29,8 +29,13 @@ class HashTable {
     // 删除
     delete(key) {
         let hashkey = this.hash(key);
-        if (this.table[hashkey]) {
-            this.table[hashkey] = null;
+        let keyArr = this.table[hashkey];
+        let size = keyArr.length;
+        while(size--) {
+            if (keyArr[size].k = key) {
+                keyArr.splice(size,1);
+                return;
+            }
         }
     }
     // 查找
@@ -50,5 +55,7 @@ ht.add('test1', '123');
 ht.add('test2', '234');
 ht.add('test3', '2345');
 
+
+ht.delete('test3');
 console.dir(ht, { depth: null });
-console.log(ht.find('test3'));
+console.log(ht.find('test3'))
