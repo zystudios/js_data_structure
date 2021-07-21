@@ -128,8 +128,31 @@ function quick_sort(arr, left, right) {
     }
 }
 
-let testArr = randomArr();
+//let testArr = randomArr();
 
-console.log('原始', testArr);
-quick_sort(testArr, 0, testArr.length - 1);
-console.log('排序', testArr);
+//console.log('原始', testArr);
+//quick_sort(testArr, 0, testArr.length - 1);
+//console.log('排序', testArr);
+
+/*
+插入排序
+
+原理，数组，0，0-1，0-2，0-3。。。 0-n，每个区间里单独进行排序
+
+时间复杂度 n²
+*/
+
+function insert_sort(arr) {
+    console.time('insert_sort');
+    for (var i = 0; i < arr.length; i++) {
+        for (var j = i; j > 0; j--) {
+            if (arr[j] < arr[j - 1]) {
+                swap(arr, j, j - 1);
+            }
+
+        }
+    }
+    console.timeEnd('insert_sort');
+    console.log(arr);
+}
+insert_sort(randomArr());
