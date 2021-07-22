@@ -144,7 +144,8 @@ function quick_sort(arr, left, right) {
 
 function insert_sort(arr) {
     console.time('insert_sort');
-    for (var i = 0; i < arr.length; i++) {
+    // 这里i直接1开始了，因为第一个数不需要排序
+    for (var i = 1; i < arr.length; i++) {
         for (var j = i; j > 0; j--) {
             if (arr[j] < arr[j - 1]) {
                 swap(arr, j, j - 1);
