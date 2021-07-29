@@ -40,12 +40,12 @@ function select_sort1(arr) {
     }
   }
   console.timeEnd("select_sort1");
-  console.log(arr);
+  console.log(arr.toString());
 }
 // select_sort1(randomArr());
 
 function select_sort2(arr) {
-  console.time("select_sort2");
+  console.time("选择排序");
   for (var i = 0; i < arr.length; i++) {
     var min_index = i;
     for (var j = i; j < arr.length; j++) {
@@ -57,8 +57,8 @@ function select_sort2(arr) {
     // 循环完了，交换一次
     swap(arr, i, min_index);
   }
-  console.timeEnd("select_sort2");
-  console.log(arr);
+  console.timeEnd("选择排序");
+  console.log(arr.toString());
 }
 
 //select_sort2(randomArr());
@@ -72,7 +72,7 @@ function select_sort2(arr) {
 */
 
 function bubble_sort(arr) {
-  console.time("bubble_sort");
+  console.time("冒泡排序");
   for (var i = 0; i < arr.length; i++) {
     for (var j = 0; j < arr.length - i; j++) {
       if (arr[j] > arr[j + 1]) {
@@ -80,17 +80,19 @@ function bubble_sort(arr) {
       }
     }
   }
-  console.timeEnd("bubble_sort");
-  console.log(arr);
+  console.timeEnd("冒泡排序");
+  console.log(arr.toString());
 }
 
 //bubble_sort(randomArr());
 
 /*
-快速排序
+快速排序1.0  最下面是2.0版本
 
 原理：数组中找一个数，作为基准，比他大的放右边，比他小的放左边
 这样就拆成了2个子数组，左边和右边递归直到 i==j
+
+时间复杂度，最差 O(n²),比如1，2，3，4，5，6，7这个数组
 */
 
 //arr 数组，i左指针，j右指针,第一次的时候给两个默认值，分别是数组头元素下标和尾元素下标
@@ -143,7 +145,7 @@ function quick_sort(arr, left, right) {
 */
 
 function insert_sort(arr) {
-  console.time("insert_sort");
+  console.time("插入排序");
   // 这里i直接1开始了，因为第一个数不需要排序
   for (var i = 1; i < arr.length; i++) {
     for (var j = i; j > 0; j--) {
@@ -152,8 +154,8 @@ function insert_sort(arr) {
       }
     }
   }
-  console.timeEnd("insert_sort");
-  console.log(arr);
+  console.timeEnd("插入排序");
+  console.log(arr.toString());
 }
 //insert_sort(randomArr());
 
@@ -246,8 +248,162 @@ function merge(arr, left, mid, right) {
   }
 }
 
-var testArr = randomArr(30);
-console.time("merge_sort");
-merge_sort(testArr, 0, testArr.length - 1);
-console.timeEnd("merge_sort");
-console.log("%s", testArr);
+// var testArr = randomArr(30);
+// console.time("merge_sort");
+// merge_sort(testArr, 0, testArr.length - 1);
+// console.timeEnd("merge_sort");
+// console.log("%s", testArr);
+
+/*
+快速排序2.0
+
+和1.0不同的是，还是以最右边为基准，然后小于他的放左边，等于他的放中间，大于他的放右边
+
+最后，这个数和大于区域的第一个数交换，完成
+
+不同的地方就在于多了一个 等于的放中间，之前是小于等于放左边
+
+时间复杂度，最差 O(n²), 比如1，2，3，4，5，6，7这个数组
+
+*/
+
+function quick_sort2_partation(arr, left, right) {
+  //  三个参数，arr就是数组，left是左边界，right右边界
+
+  // 第一次的时候，left = 0 right = 数组长度-1
+
+  //  首先，基准数,取最右边的数
+  // leftindex表示小于区域右边的位置，rightindex表示大于区域，左边的位置，刚开始的时候，都在最外边
+  // 比如 【1，2，3，4，5】 小于区域在1前面，就是数组的-1位置，大于区域最左边在5右边，其实就是下标5的位置
+  // 显然这俩刚开始都是越界的
+  var base_num = arr[right];
+  var leftIndex = left - 1;
+  var rightIndex = right;
+  var i = left;
+  //i表示移动的指针，从左往右扫描，刚开始在数组第一个数
+
+  // 首先，i是位置，从左到右，必须满足小于数组长度，且小于右边界
+  while (i < rightIndex) {
+    if (arr[i] < base_num) {
+      // 如果小于，i位置和小于区 下一个做交换
+      // 小于区域右扩一位
+      // 指针右移动一位
+      swap(arr, i, leftIndex + 1);
+      leftIndex++;
+      i++;
+    } else if (arr[i] > base_num) {
+      swap(arr, i, rightIndex - 1);
+      rightIndex--;
+      // 如果大于，当前i的数字，和大于区域前一个数字交换，就是rightindex - 1的数
+    } else {
+      i++;
+      // 相等，指针右移动一位，其他不动
+    }
+  }
+
+  swap(arr, rightIndex, right);
+
+  return [leftIndex + 1, rightIndex];
+}
+
+function quick_sort2(arr, left, right) {
+  if (left >= right) {
+    return;
+  }
+
+  var index = quick_sort2_partation(arr, left, right);
+  quick_sort2(arr, left, index[0] - 1);
+  quick_sort2(arr, index[1] + 1, right);
+}
+
+// var testArr = randomArr();
+// console.log(testArr);
+// quick_sort2(testArr, 0, testArr.length - 1);
+// console.log(testArr);
+
+
+
+/*
+快速排序3.0
+
+数组随机选一个数，和这个数组最后一个数交换，其他一样
+
+时间复杂度，O(n * logn)
+
+*/
+
+function quick_sort3_partation(arr, left, right) {
+  //  三个参数，arr就是数组，left是左边界，right右边界
+
+  // 第一次的时候，left = 0 right = 数组长度-1
+
+  //  首先，基准数,取最右边的数
+  // leftindex表示小于区域右边的位置，rightindex表示大于区域，左边的位置，刚开始的时候，都在最外边
+  // 比如 【1，2，3，4，5】 小于区域在1前面，就是数组的-1位置，大于区域最左边在5右边，其实就是下标5的位置
+  // 显然这俩刚开始都是越界的
+  var base_num = arr[right];
+  var leftIndex = left - 1;
+  var rightIndex = right;
+  var i = left;
+  //i表示移动的指针，从左往右扫描，刚开始在数组第一个数
+
+  // 首先，i是位置，从左到右，必须满足小于数组长度，且小于右边界
+  while (i < rightIndex) {
+    if (arr[i] < base_num) {
+      // 如果小于，i位置和小于区 下一个做交换
+      // 小于区域右扩一位
+      // 指针右移动一位
+      swap(arr, i, leftIndex + 1);
+      leftIndex++;
+      i++;
+    } else if (arr[i] > base_num) {
+      swap(arr, i, rightIndex - 1);
+      rightIndex--;
+      // 如果大于，当前i的数字，和大于区域前一个数字交换，就是rightindex - 1的数
+    } else {
+      i++;
+      // 相等，指针右移动一位，其他不动
+    }
+  }
+
+  swap(arr, rightIndex, right);
+
+  return [leftIndex + 1, rightIndex];
+}
+
+function quick_sort3(arr, left, right) {
+  if (left >= right) {
+    return;
+  }
+ // 唯一不同的地方，这里吧数组里随机一个数和最后一个交换，注意随机区间
+  swap(arr, left+Math.trunc(Math.random()*(right - left + 1)),right);
+  var index = quick_sort3_partation(arr, left, right);
+  quick_sort3(arr, left, index[0] - 1);
+  quick_sort3(arr, index[1] + 1, right);
+}
+
+var testArr = randomArr(100);
+var testArr1 = testArr.concat();
+var testArr2 = testArr.concat();
+var testArr3 = testArr.concat();
+console.log('原始数组',testArr.toString());
+
+select_sort2(testArr.concat());
+bubble_sort(testArr.concat());
+insert_sort(testArr.concat());
+
+
+console.time("归并排序");
+merge_sort(testArr1, 0, testArr1.length - 1);
+console.timeEnd("归并排序");
+console.log(testArr1.toString());
+
+console.time("快速排序");
+quick_sort3(testArr2, 0, testArr2.length - 1);
+console.timeEnd("快速排序");
+console.log(testArr2.toString());
+
+console.time("系统自带");
+testArr3.sort(function(a,b){return a-b});
+console.timeEnd("系统自带");
+console.log(testArr3.toString());
