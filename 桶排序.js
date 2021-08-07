@@ -125,7 +125,7 @@ function tong1(arr) {
 
 //tong1([12, 23, 4, 111, 67, 45, 19]);
 
-// 上面的过程有点繁琐，我们简化一下
+// 上面的过程有点繁琐，我们简化一下  maxWeishu表示当前数组里最大的位数
 
 function tong2(arr, maxWeishu) {
   var tongArr = [[], [], [], [], [], [], [], [], [], []];
@@ -151,4 +151,42 @@ function tong2(arr, maxWeishu) {
   console.log(arr);
 }
 
-tong2([25, 17, 86, 6, 1, 123, 245, 278, 891, 1, 3, 12, 6, 8], 3);
+//tong2([25, 17, 86, 6, 1, 123, 245, 278, 891, 1, 3, 12, 6, 8], 3);
+
+// 再改进一下，自动判断最大位数
+
+function tong3(arr) {
+  var tongArr = [[], [], [], [], [], [], [], [], [], []];
+
+  var maxWeishu = 0;
+  // 先找数组最大的数字
+  for (var max = 0; max < arr.length; max++) {
+    if (arr[max] > maxWeishu) {
+      maxWeishu = arr[max];
+    }
+  }
+  // 取位数
+  maxWeishu = Math.trunc(maxWeishu / 10) + 1;
+
+  for (var i = 0; i < maxWeishu; i++) {
+    tongArr = [[], [], [], [], [], [], [], [], [], []];
+
+    for (var j = 0; j < arr.length; j++) {
+      var weishu = Math.trunc((arr[j] / Math.pow(10, i)) % 10);
+      // 取位数,注意这个小技巧 n / 位数（个位1 十位10，百位100...） % 10
+      tongArr[weishu].push(arr[j]);
+    }
+
+    arr = [];
+    for (var m = 0; m < tongArr.length; m++) {
+      if (tongArr[m].length > 0) {
+        // 判断下桶是不是空
+        for (var n = 0; n < tongArr[m].length; n++) {
+          arr.push(tongArr[m][n]);
+        }
+      }
+    }
+  }
+  console.log(arr);
+}
+tong3([25, 17, 86, 6, 1, 123, 245, 278, 891, 1, 3, 12, 6, 8]);
