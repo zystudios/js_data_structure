@@ -172,7 +172,7 @@ function tong3(arr) {
     tongArr = [[], [], [], [], [], [], [], [], [], []];
 
     for (var j = 0; j < arr.length; j++) {
-      var weishu = Math.trunc((arr[j] / Math.pow(10, i)) % 10);
+      var weishu =Math.trunc((arr[j] / Math.pow(10, i)) % 10);
       // 取位数,注意这个小技巧 n / 位数（个位1 十位10，百位100...） % 10
       tongArr[weishu].push(arr[j]);
     }
@@ -189,4 +189,4 @@ function tong3(arr) {
   }
   console.log(arr);
 }
-tong3([25, 17, 86, 6, 1, 123, 245, 278, 891, 1, 3, 12, 6, 8]);
+tong3([25, 17, 86, 6, 1, 123, -245, 278, 891, 1, 3, 12, 6, 8]);
