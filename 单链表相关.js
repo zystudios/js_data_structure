@@ -186,3 +186,58 @@ while (a.next != null && b.next != null) {
     b = b.next;
   }
 }
+
+/*
+判断一个单链表是不是回文结构
+
+方法1 用栈，把链表入栈，然后遍历链表的同时，出栈，如果都一样，回文
+*/
+
+let huiwenLink = new LinkedList();
+huiwenLink.append("1");
+huiwenLink.append("1");
+huiwenLink.append("1");
+huiwenLink.append("1");
+
+//先入栈，js就用数组了
+
+var a = huiwenLink.head;
+var arr = [];
+while (a && a.data != null) {
+  arr.push(a.data);
+  a = a.next;
+}
+
+// 然后遍历，出栈对比，pop就是出栈，删除最后一个元素，并且返回这个元素值。栈：先入后出
+a = huiwenLink.head;
+while (a && a.data != null) {
+  if (a.data != arr.pop()) {
+    console.log("false");
+    break;
+  }
+  a = a.next;
+}
+// 打印出false就表示不是了
+// 当然，这个也可以省一点空间，比如，找到原队列的中间位置，把右半部分入栈
+// 怎么找位置，通常单链表用快慢指针，慢指针一次走一步，快指针一次走两步，这样，快指针走完的时候，慢指针就是中间
+
+let kuaimanLink = new LinkedList();
+kuaimanLink.append("1");
+kuaimanLink.append("2");
+kuaimanLink.append("5");
+kuaimanLink.append("4");
+kuaimanLink.append("3");
+kuaimanLink.append("7");
+kuaimanLink.append("6");
+kuaimanLink.append("0");
+//kuaimanLink.append("9");
+
+var slow = kuaimanLink.head;
+var fast = kuaimanLink.head;
+
+while (fast && fast.next != null) {
+  slow = slow.next;
+  fast = fast.next.next;
+}
+console.log(slow.data);
+// 注意，如果链表是奇数，那么这个就是最中间的，如果链表是偶数个，那么这个就是右半部分第一个
