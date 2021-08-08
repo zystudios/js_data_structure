@@ -181,7 +181,7 @@ while (a.next != null && b.next != null) {
   } else if (a.data > b.data) {
     b = b.next;
   } else {
-    console.log(a.data);
+    // console.log(a.data);  这里就是相同值
     a = a.next;
     b = b.next;
   }
@@ -234,10 +234,124 @@ kuaimanLink.append("0");
 
 var slow = kuaimanLink.head;
 var fast = kuaimanLink.head;
-
-while (fast && fast.next != null) {
+// wihle这么判断，主要是为了适应链表个数为1个，2个的情况，要不然循环没意义
+while (fast.next != null && fast.next.next != null) {
   slow = slow.next;
   fast = fast.next.next;
 }
-console.log(slow.data);
-// 注意，如果链表是奇数，那么这个就是最中间的，如果链表是偶数个，那么这个就是右半部分第一个
+//console.log(slow.data);
+// 注意，如果链表是奇数，那么这个就是最中间的，如果链表是偶数个，那么这个就是左半部分最后一个
+
+/*
+一个单链表，指定一个数，比他小的在左边，等于他的在中间，比他大的在右边
+
+解法：准备6个变量，分别是小于的头和尾，等于的头和尾，大于的头和尾
+
+遍历，
+*/
+
+let partationLink = new LinkedList();
+partationLink.append("1");
+partationLink.append("2");
+partationLink.append("5");
+partationLink.append("4");
+partationLink.append("3");
+partationLink.append("7");
+partationLink.append("6");
+partationLink.append("0");
+
+var smallhead = null;
+var smalltail = null;
+
+var equihead = null;
+var equitaol = null;
+
+var largehead = null;
+var largetail = null;
+
+const num = 5;
+
+var list = partationLink.head;
+
+while (list && list.data != null) {
+  if (list.data < num) {
+    if (smallhead == null) {
+      smallhead = list;
+      smalltail = list;
+    } else {
+      // 这里不好理解，链表保存的是引用，也就是说，sh，st指向的list，是同一个引用
+      // 你修改了st的next，相当于sh的next也就修改了，所以，sh就会一直穿起来，
+      // 因为你st是最后一个节点，相当于，把st的最后一个节点修改了，就可以一直穿下去
+      smalltail.next = list;
+      smalltail = list;
+    }
+  }
+
+  if (list.data == num) {
+    if (equihead == null) {
+      equihead = list;
+      equitail = list;
+    } else {
+      equitail.next = list;
+      equitail = list;
+    }
+  }
+
+  if (list.data > num) {
+    if (largehead == null) {
+      largehead = list;
+      largetail = list;
+    } else {
+      largetail.next = list;
+      largetail = list;
+    }
+  }
+
+  list = list.next;
+}
+
+// 到这里，把这六个变量穿起来就是，但是这里注意要判断边界，因为有可能没有小于的，没有大于的，没有等于的
+
+// 其实总共就是三个，判断st有没有，判断et有没有，判断lh有没有
+
+// 这里没什么技巧了，就是一个个判断了
+var finalList = null;
+
+if (smalltail) {
+  //如果有小于的值
+  finalList = smallhead;
+
+  if (equitail) {
+    //如果有中间的
+    smalltail.next = equihead;
+
+    // 如果有大于的
+
+    if (largehead) {
+      equitail.next = largehead;
+    }
+  } else {
+    //没有中间的，如果有大于的
+
+    if (largehead) {
+      smalltail.next = largehead;
+    } else {
+      //没有中间也没有大于的
+    }
+  }
+} else {
+  // 没有小于的
+  if (equitail) {
+    // 如果有中间的
+    finalList = equihead;
+    //如果有大于的
+    if (largehead) {
+      equitail.next = largehead;
+    }
+  } else {
+    //没有中间的
+    finalList = largehead;
+  }
+}
+
+console.dir(finalList, { depth: 100 });
