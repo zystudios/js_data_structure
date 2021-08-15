@@ -261,12 +261,9 @@ function kuandu(head){
     while(duilie.length > 0 ){
 
         var node = duilie.shift();
-        console.log(node);
+        console.log(node);// 这个打印顺序就是宽度优先的顺序
         duilie.push(node && node.left);
         duilie.push(node && node.right);
-
-
-
     }
 
 }
@@ -285,12 +282,89 @@ function kuandu(head){
 */
 
 
+var max = 0;
+
+function zhongxubianli(head){
+    if(head == null){
+        return;
+    }
+     zhongxubianli(head.left);
+     console.log('这里输出节点就是中序遍历');
+     if(head.value > max){
+
+        max = head.value;
+
+     }else{
+        // 不是搜索二叉树
+        break;
+     }
+     zhongxubianli(head.right);
+}
+
 
 
 
 
 /*
 判断是不是完全二叉树
+
+完全二叉树：每一层都有左孩子右孩子
+
+1 如果有一个节点 ，只有右孩子 没有左孩子，就不是
+2 满足1 如果有一个节点，左孩子或者右孩子有一个为空，那么后续所有节点，不能有左右孩子，否则就不是
+
+解法：按照宽度遍历（前序遍历），
+
+*/
+
+
+function kuandu(head){
+    var duilie = [];
+    duilie.push(head);
+    var isleaf = false;
+
+    while(duilie.length > 0 ){
+
+        var node = duilie.shift();
+        console.log(node);// 这个打印顺序就是宽度优先的顺序
+
+        if(node.left == null && node.right){
+            // 如果左孩子空，右孩子有，肯定不是
+            return false;
+        }
+
+        if(isleaf && (node.left || node.right)){
+            // 如果已经有一个节点，只有左孩子了，那么后续节点，只要有孩子，就肯定不是
+               return false;
+        }
+
+
+        duilie.push(node && node.left);
+        duilie.push(node && node.right);
+
+        if(node.left == null || node.right == null){
+            // 如果一个节点，左孩子 右孩子有一个为空，那么，后面所有的节点都不能有孩子
+             isleaf = true;
+         }
+
+    }
+
+}
+
+
+
+/*
+判断是不是满二叉树
+
+宽度优先遍历，每个节点都必须有左右孩子，除非他是叶子节点
+
+
+这里用动态规划解
+
+判断是不是满二叉树，需要两个东西，一个是树高度，一个是数的节点数
+
+如果2的高度次方-1 == 节点数，必然是满二叉树
+
 */
 
 
@@ -299,5 +373,20 @@ function kuandu(head){
 
 
 /*
-判断是不是满二叉树
+判断平衡二叉树
+
+任何一个子树，左树和右树高度不超过1
+
+*/
+
+
+
+/*
+最低公共祖先
+
+二叉树 两个节点向根节点走，哪个点是第一个可以相交的，哪个点就是
+
+解法：这两个节点 各自向上遍历，找出所有父节点
+
+用一个hashmap，存所有的父节点，如果有发现存在了，这个节点就是相交的
 */
