@@ -9,7 +9,7 @@
 
 
 class BinaryTreeNode {
-    constructor(data,left = null,right = null){
+    constructor(data, left = null, right = null) {
         this.left = left;
         this.right = right;
         this.data = data;
@@ -18,7 +18,7 @@ class BinaryTreeNode {
 
 
 class BinaryTree {
-    constructor(){
+    constructor() {
         // 根节点 null
         this.parent = null;
     }
@@ -64,8 +64,8 @@ function f(n){
 
 */
 
-function xianxubianli(head){
-    if(head == null){
+function xianxubianli(head) {
+    if (head == null) {
         return;
     }
     console.log('这里输出节点就是先序遍历');
@@ -91,14 +91,14 @@ function xianxubianli(head){
 
 */
 
-function zhongxubianli(head){
-    if(head == null){
+function zhongxubianli(head) {
+    if (head == null) {
         return;
     }
     console.log('这里输出节点就是先序遍历');
     zhongxubianli(head.left);
-     console.log('这里输出节点就是中序遍历');
-     zhongxubianli(head.right);
+    console.log('这里输出节点就是中序遍历');
+    zhongxubianli(head.right);
 }
 
 //-------------------------------------------------------------------------
@@ -119,8 +119,8 @@ function zhongxubianli(head){
 
 */
 
-function houxubianli(head){
-    if(head == null){
+function houxubianli(head) {
+    if (head == null) {
         return;
     }
     console.log('这里输出节点就是先序遍历');
@@ -147,19 +147,19 @@ function houxubianli(head){
 
 */
 
-function xianxubianli_feidigui(head){
+function xianxubianli_feidigui(head) {
 
-    if(!head){
-        return ;
+    if (!head) {
+        return;
     }
 
     var zhan = [];
     zhan.push(head);
 
-    while(zhan.lendth > 0){
+    while (zhan.lendth > 0) {
 
         var node = zhan.pop();
-        console.log(node);// 这里就是先序遍历的顺序
+        console.log(node); // 这里就是先序遍历的顺序
         zhan.push(node && node.right);
         zhan.push(node && node.left);
 
@@ -179,21 +179,21 @@ function xianxubianli_feidigui(head){
 
 */
 
-function zhongxubianli_feidigui(head){
+function zhongxubianli_feidigui(head) {
 
     var zhan = [];
     zhan.push(head);
 
-    while(zhan.length > 0){
-       // 先把左边界都入栈
-        while(head && head.left){
+    while (zhan.length > 0) {
+        // 先把左边界都入栈
+        while (head && head.left) {
             zhan.push(head.left)
         }
-     //弹出
-       var node = zhan.pop();
-       console.log(node);// 这个打印顺序就是中序遍历的顺序
-       // head设置为弹出节点的right，继续重复
-       head = node.right;
+        //弹出
+        var node = zhan.pop();
+        console.log(node); // 这个打印顺序就是中序遍历的顺序
+        // head设置为弹出节点的right，继续重复
+        head = node.right;
 
 
 
@@ -216,23 +216,23 @@ function zhongxubianli_feidigui(head){
 栈B就是后序遍历，因为入栈B的顺序是头右左，B出站以后，顺序就是左右头，所以就是后序遍历的顺序
 */
 
-function zhongxubianli_feidigui(head){
+function zhongxubianli_feidigui(head) {
 
-     var zhan_a = [];
-     var zhan_b = [];
-     zhan_a.push(head);
+    var zhan_a = [];
+    var zhan_b = [];
+    zhan_a.push(head);
 
-     while(zhan_a.length >0){
-         var node = zhan_a.pop();
-         zhan_b.push(node);
-         zhan_a.push(node && node.left);
-         zhan_a.push(node && node.right);
-     }
+    while (zhan_a.length > 0) {
+        var node = zhan_a.pop();
+        zhan_b.push(node);
+        zhan_a.push(node && node.left);
+        zhan_a.push(node && node.right);
+    }
 
-     // 栈b里面就是后序遍历的顺序
-     while(zhan_b.length > 0){
-         console.log(zhan_b.pop());
-     }
+    // 栈b里面就是后序遍历的顺序
+    while (zhan_b.length > 0) {
+        console.log(zhan_b.pop());
+    }
 
 }
 
@@ -254,14 +254,14 @@ function zhongxubianli_feidigui(head){
 
 */
 
-function kuandu(head){
+function kuandu(head) {
     var duilie = [];
     duilie.push(head);
 
-    while(duilie.length > 0 ){
+    while (duilie.length > 0) {
 
         var node = duilie.shift();
-        console.log(node);// 这个打印顺序就是宽度优先的顺序
+        console.log(node); // 这个打印顺序就是宽度优先的顺序
         duilie.push(node && node.left);
         duilie.push(node && node.right);
     }
@@ -284,21 +284,21 @@ function kuandu(head){
 
 var max = 0;
 
-function zhongxubianli(head){
-    if(head == null){
+function zhongxubianli(head) {
+    if (head == null) {
         return;
     }
-     zhongxubianli(head.left);
-     console.log('这里输出节点就是中序遍历');
-     if(head.value > max){
+    zhongxubianli(head.left);
+    console.log('这里输出节点就是中序遍历');
+    if (head.value > max) {
 
         max = head.value;
 
-     }else{
+    } else {
         // 不是搜索二叉树
         break;
-     }
-     zhongxubianli(head.right);
+    }
+    zhongxubianli(head.right);
 }
 
 
@@ -318,34 +318,34 @@ function zhongxubianli(head){
 */
 
 
-function kuandu(head){
+function kuandu(head) {
     var duilie = [];
     duilie.push(head);
     var isleaf = false;
 
-    while(duilie.length > 0 ){
+    while (duilie.length > 0) {
 
         var node = duilie.shift();
-        console.log(node);// 这个打印顺序就是宽度优先的顺序
+        console.log(node); // 这个打印顺序就是宽度优先的顺序
 
-        if(node.left == null && node.right){
+        if (node.left == null && node.right) {
             // 如果左孩子空，右孩子有，肯定不是
             return false;
         }
 
-        if(isleaf && (node.left || node.right)){
+        if (isleaf && (node.left || node.right)) {
             // 如果已经有一个节点，只有左孩子了，那么后续节点，只要有孩子，就肯定不是
-               return false;
+            return false;
         }
 
 
         duilie.push(node && node.left);
         duilie.push(node && node.right);
 
-        if(node.left == null || node.right == null){
+        if (node.left == null || node.right == null) {
             // 如果一个节点，左孩子 右孩子有一个为空，那么，后面所有的节点都不能有孩子
-             isleaf = true;
-         }
+            isleaf = true;
+        }
 
     }
 
