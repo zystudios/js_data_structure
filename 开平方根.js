@@ -4,13 +4,13 @@
 就把中间值赋给最大值，否者就把中间值赋给最小值，一直循环，直到取到想要的精度为止
 */
 
-var x = 12; // 要开平方根的数字
-var jingdu = 0.0001;
+var x = 16; // 要开平方根的数字
+var jingdu = 0.0001; //意思是计算到小数后面几位
 var high = x; // 定义一个最高数
 var low = 0; // 定义一个最低数
 var mid = (low + high) / 2; // 取中间的数字
 
-while (high - low > jingdu) {
+while (high - low > jingdu ) {
     if (mid * mid > x) {
         high = mid;
     } else {
@@ -20,7 +20,6 @@ while (high - low > jingdu) {
 }
 
 console.log(mid);
-
 
 /*
 牛顿迭代
@@ -33,7 +32,7 @@ console.log(mid);
 //牛顿迭代法
 function sqrt2(x) {
     if (x == 0) {
-    	return 0;
+        return 0;
     }
     var last = 0.0;
     var result = 1.0;
