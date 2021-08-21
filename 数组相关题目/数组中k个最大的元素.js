@@ -50,7 +50,7 @@ let findKthLargest = function(nums, k) {
  * @param {number} k
  * @return {number}
  */
- var findKthLargest = function (nums, k) {
+ var findKthLargest2 = function (nums, k) {
     const heap = [,].concat(nums.slice(0, k));
     // 下标0不使用，填充站位。主要是为了方便，因为数组0开始
     // 保证下标是从1，2，3，4，5，6，7这样的层次顺序，从而才有任意节点[i]的父节点为Math.floor(i/2)
