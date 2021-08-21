@@ -14,10 +14,9 @@ class LinkedList {
 
   // 链表追加一个数据
   append(data) {
-   
     let element = new LinkedNode(data);
-    
-     // 头结点不存在，空链表，那么头节点就是该节点
+
+    // 头结点不存在，空链表，那么头节点就是该节点
     // if (this.head === null)  if (this.length === 0) 都可以
     if (this.head === null) {
       this.head = element;
@@ -37,7 +36,7 @@ class LinkedList {
     }
 
     let element = new LinkedNode(data);
-   // 空链表，直接就是头结点
+    // 空链表，直接就是头结点
     if (this.head === null) {
       this.head = element;
       this.length += 1;
@@ -50,7 +49,6 @@ class LinkedList {
       this.length += 1;
       return;
     }
-
 
     //否则，就是直接插入了， 这里不用判断index === length（是不是尾部插入）了，因为默认new的node，next就是null，所以就算是结尾插入也没问题
     let currentNode = this.findNode(index - 1);
@@ -89,7 +87,6 @@ class LinkedList {
 
     let currentIndex = index;
 
-    
     //先根据index看看顺序在哪里，小于0，默认为0，大于0，默认为链表的长度
     // 其实这里也可以直接报错 out of range
     if (index < 0) {
@@ -97,7 +94,7 @@ class LinkedList {
     } else if (index >= this.length) {
       currentIndex = this.length;
     }
-    // 头结点开始遍历，遍历到需要查找的index，返回  
+    // 头结点开始遍历，遍历到需要查找的index，返回
     let currentNode = this.head;
     for (var i = 0; i < currentIndex; i++) {
       currentNode = currentNode.next;
