@@ -101,11 +101,15 @@ var numDecodings = function (s) {
             if (s[i - 1] == '0' || s[i - 1] > '2') {
                 return 0;
             } else {
+                
                 //不满足上面，说明可以拆
                 dp[i] = dp[i - 2];
             }
         }
     }
-
     return dp[n - 1];
 };
+
+
+
+console.log(numDecodings('1221'));
