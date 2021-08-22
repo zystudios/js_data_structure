@@ -53,6 +53,8 @@ function start(arr, num) {
   }
   half_find(arr, num);
 }
+
+
 // 优化算法，不在额外分割数组，可以看到耗时减少一半，但是还远不如系统自带indexOf
 function half_find_new(arr, num, left, right) {
   if (Math.abs(left - right) < 2) {
